@@ -10,5 +10,9 @@ namespace RentACar.Data
             : base(options)
         {
         }
+
+        public DbSet<Car> Cars { get; set; }
+
+        public DbSet<CarRequest> CarRequests { get; set; }
     }
 }
