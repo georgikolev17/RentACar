@@ -1,21 +1,30 @@
-﻿namespace RentACar.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace RentACar.Models
 {
     public class CarRequest
     {
-        public CarRequest(string? userID, string? carID, DateOnly startDate, DateOnly endDate)
+        public CarRequest(string userID, string carID, DateTime startDate, DateTime endDate)
         {
-            UserID = userID;
-            CarID = carID;
-            StartDate = startDate;
-            EndDate = endDate;
+            this.UserId = userID;
+            this.CarId = carID;
+            this.StartDate = startDate;
+            this.EndDate = endDate;
+        }
+        public CarRequest()
+        {
         }
 
-        public string? UserID;
+        [Required]
+        public string UserId;
+        public ApplicationUser User { get; set; }
 
-        public string? CarID;
+        [Required]
+        public string CarId { get; set; }
+        public Car Car { get; set; }
 
-        public DateOnly StartDate;
-        
-        public DateOnly EndDate;
+        public DateTime StartDate { get; set; }
+
+        public DateTime EndDate { get; set; }
     }
 }

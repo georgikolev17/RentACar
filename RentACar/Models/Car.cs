@@ -1,4 +1,6 @@
-﻿namespace RentACar.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace RentACar.Models
 {
     public class Car
     {
@@ -10,10 +12,14 @@
             NumPassengers = numPassengers;
             Description = description;
             PricePerDay = pricePerDay;
-            CarUUID = Guid.NewGuid().ToString();
+            Id = Guid.NewGuid().ToString();
+        }
+        public Car()
+        {
         }
 
-        public string CarUUID;
+        [Required]
+        public string Id { get; set; }
 
         public string? Make { get; set; }
 
