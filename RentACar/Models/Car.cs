@@ -27,10 +27,12 @@ namespace RentACar.Models
 
         public string? Year { get; set; }
 
+        [Display(Name = "Number of passengers")]
         public int NumPassengers { get; set; }
 
         public string? Description { get; set; }
 
+        [Display(Name = "Price/day")]
         public int PricePerDay { get; set; }
     }
 }

@@ -17,6 +17,10 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<ApplicationRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+// Register custom services
+builder.Services.AddTransient<CarServices>();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

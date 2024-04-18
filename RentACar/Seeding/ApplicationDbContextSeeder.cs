@@ -29,6 +29,7 @@
                               new RolesSeeder(),
                               new AdministratorSeeder(),
                               new UsersSeeder(),
+                              new CarsSeeder(),
                           };
 
             foreach (var seeder in seeders)

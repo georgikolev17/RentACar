@@ -63,5 +63,10 @@ namespace RentACar.Data
             // If there are any overlapping requests, return true; otherwise, return false
             return overlappingRequests.Any();
         }
+
+        public IEnumerable<Car> GetAllCars()
+        {
+            return this.db.Cars;
+        }
     }
 }

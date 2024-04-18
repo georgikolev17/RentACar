@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RentACar.Data;
 using RentACar.Models;
 using System.Diagnostics;
 
@@ -8,12 +10,12 @@ namespace RentACar.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private DbContext DbContext;
+        private readonly CarServices carServices;
 
-        public HomeController(ILogger<HomeController> logger, DbContext ApplicationdbContext)
+        public HomeController(ILogger<HomeController> logger, CarServices carServices)
         {
             _logger = logger;
-            DbContext = ApplicationdbContext;
+            this.carServices=carServices;
         }
 
         public IActionResult Index()
@@ -21,9 +23,11 @@ namespace RentACar.Controllers
             return View();
         }
 
+        [Authorize]
+        [Route("/cars")]
         public IActionResult Cars()
         {
-            return View(DbContext.Cars);
+            return View(this.carServices.GetAllCars());
         }
 
         public IActionResult Privacy()
