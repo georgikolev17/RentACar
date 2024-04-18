@@ -10,10 +10,13 @@ namespace RentACar.Seeding
 
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
-            for (int i = 0; i < seededCars; i++)
+            if(dbContext.Cars.Count() == 0)
             {
-                var car = new Car(makes[i], "A", (2010+i).ToString(), 4, $"Very good {makes[i]} car", 20);
-                await dbContext.Cars.AddAsync(car);
+                for (int i = 0; i < seededCars; i++)
+                {
+                    var car = new Car(makes[i], "A", (2010+i).ToString(), 4, $"Very good {makes[i]} car", 20);
+                    await dbContext.Cars.AddAsync(car);
+            }
             }
         }
     }
