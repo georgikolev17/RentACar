@@ -4,7 +4,7 @@ namespace RentACar.Models
 {
     public class CarRequest
     {
-        public CarRequest(string userID, string carID, DateTime startDate, DateTime endDate)
+        public CarRequest(string? userID, string? carID, DateTime startDate, DateTime endDate)
         {
             this.UserId = userID;
             this.CarId = carID;
@@ -13,15 +13,16 @@ namespace RentACar.Models
         }
         public CarRequest()
         {
+
         }
 
         [Required]
-        public string UserId;
-        public ApplicationUser User { get; set; }
+        public string? UserId;
+        public ApplicationUser? User { get; set; }
 
         [Required]
-        public string CarId { get; set; }
-        public Car Car { get; set; }
+        public string? CarId { get; set; }
+        public Car? Car { get; set; }
 
         public DateTime StartDate { get; set; }
 
