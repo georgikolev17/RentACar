@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RentACar.Data;
@@ -11,11 +12,13 @@ namespace RentACar.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly CarServices carServices;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public HomeController(ILogger<HomeController> logger, CarServices carServices)
+        public HomeController(ILogger<HomeController> logger, CarServices carServices, UserManager<ApplicationUser> userManager)
         {
             _logger = logger;
             this.carServices=carServices;
+            this.userManager=userManager;
         }
 
         public IActionResult Index()

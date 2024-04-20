@@ -64,6 +64,7 @@ namespace RentACar.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Make,Model,Year,NumPassengers,Description,PricePerDay")] Car car)
         {
+            
             if (ModelState.IsValid)
             {
                 await carServices.AddCar(car);
