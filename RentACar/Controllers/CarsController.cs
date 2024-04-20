@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -16,9 +19,11 @@ namespace RentACar.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly CarServices carServices;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public CarsController(ApplicationDbContext context, CarServices carServices)
+        public CarsController(ApplicationDbContext context, CarServices carServices, UserManager<ApplicationUser> userManager)
         {
+            _userManager = userManager;
             _context = context;
             this.carServices=carServices;
         }
@@ -46,6 +51,9 @@ namespace RentACar.Controllers
                 return NotFound();
             }
 
+            var carRequests = _context.CarRequests.Where(x => x.CarId.Equals(id)).ToList();
+            this.ViewBag.CarRequests = carRequests;
+
             return View(car);
         }
 
@@ -70,6 +78,44 @@ namespace RentACar.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(car);
+        }
+
+        // GET: Cars/Reserve
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = GlobalConstants.UserRoleName)]
+        //[ValidateAntiForgeryToken]
+        public IActionResult Reserve(string id)
+        {
+            this.ViewBag.CarId = id;
+            return View();
+        }
+
+        // Post: Cars/Reserve
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = GlobalConstants.UserRoleName)]
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> Reserve([Bind("UserId, CarId, StartDate, EndDate")] CarRequest carRequest)
+        {
+
+            if (ModelState.IsValid)
+            {
+                    if(!carServices.IsOverlap(carRequest.StartDate, carRequest.EndDate))
+                    {
+
+                    carRequest.UserId = this._userManager.GetUserId(this.User)
+;
+                    _context.CarRequests.Add(carRequest);
+                    }
+                    else
+                    {
+                    return Problem("Dates Overlap With Another User");
+                    }
+                    await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Cars/Edit/5
@@ -163,6 +209,8 @@ namespace RentACar.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+
 
         private bool CarExists(string id)
         {
