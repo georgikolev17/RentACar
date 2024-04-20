@@ -50,6 +50,7 @@ namespace RentACar.Controllers
         }
 
         // GET: Cars/Create
+        [Authorize(Roles = GlobalConstants.AdminRoleName)]
         public IActionResult Create()
         {
             return View();
@@ -58,6 +59,7 @@ namespace RentACar.Controllers
         // POST: Cars/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = GlobalConstants.AdminRoleName)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Make,Model,Year,NumPassengers,Description,PricePerDay")] Car car)
@@ -71,6 +73,7 @@ namespace RentACar.Controllers
         }
 
         // GET: Cars/Edit/5
+        [Authorize(Roles = GlobalConstants.AdminRoleName)]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null || _context.Cars == null)
@@ -91,6 +94,7 @@ namespace RentACar.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = GlobalConstants.AdminRoleName)]
         public async Task<IActionResult> Edit(string id, [Bind("Id,Make,Model,Year,NumPassengers,Description,PricePerDay")] Car car)
         {
             if (id != car.Id)
@@ -122,6 +126,7 @@ namespace RentACar.Controllers
         }
 
         // GET: Cars/Delete/5
+        [Authorize(Roles = GlobalConstants.AdminRoleName)]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null || _context.Cars == null)
@@ -142,6 +147,7 @@ namespace RentACar.Controllers
         // POST: Cars/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = GlobalConstants.AdminRoleName)]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             if (_context.Cars == null)
