@@ -22,16 +22,16 @@ namespace RentACar.Data
             }
         }
 
-        public void AddCar(Car car)
+        public async Task AddCar(Car car)
         {
-            db.Cars.Add(car);
-            db.SaveChanges();
+            await db.Cars.AddAsync(car);
+            await db.SaveChangesAsync();
         }
 
-        public void RemoveCar(Car car)
+        public async Task RemoveCar(Car car)
         {
-            db.Cars.Remove(car);
-            db.SaveChanges();
+            await db.Cars.AddAsync(car);
+            await db.SaveChangesAsync();
         }
 
         public List<CarRequest> CarsRequestedByUser(ApplicationUser user)

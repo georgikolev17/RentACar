@@ -22,13 +22,13 @@ namespace RentACar.Controllers
         {
             return View();
         }
-
+/*
         [Authorize]
         [Route("/cars")]
         public IActionResult Cars()
         {
             return View(this.carServices.GetAllCars());
-        }
+        }*/
 
         public IActionResult Privacy()
         {
