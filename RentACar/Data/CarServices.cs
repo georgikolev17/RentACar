@@ -42,6 +42,7 @@ namespace RentACar.Data
             return userRequests;
         }
 
+
         public List<ApplicationUser> UsersRequestingCar(Car car)
         {
             var carRequestsForCarID = db.CarRequests.Where(r => r.CarId.Equals(car.Id)).ToList();
